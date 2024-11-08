@@ -1,0 +1,16 @@
+{{!-- Signup Page Template --}}
+<section id="signup">
+    <h2>Sign Up</h2>
+    <form class="signup-form" action="/api/users/signup" method="POST">
+        <label for="name-signup">Name:</label>
+        <input type="text" id="name-signup" name="name" required>
+
+        <label for="email-signup">Email:</label>
+        <input type="email" id="email-signup" name="email" required>
+
+        <label for="password-signup">Password:</label>
+        <input type="password" id="password-signup" name="password" required>
+
+        <button type="submit">Sign Up</button>
+    </form>
+</section>
