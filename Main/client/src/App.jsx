@@ -1,23 +1,25 @@
-// File: client/src/App.js
+// File: client/src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Inventory from './pages/Inventory';
+import InventoryItemCard from './components/InventoryItemCard';
 
 const App = () => {
   return (
-    <Router>
+    <Router> {/* This will now work correctly as BrowserRouter */}
       <Header />
-      <Switch>
-        <Route exact path="/" component={Dashboard} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/inventory" component={Inventory} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/inventory" element={<Inventory />} />
+        <Route path="/inventoryitemcard" element={<InventoryItemCard />} />
+      </Routes>
       <Footer />
     </Router>
   );

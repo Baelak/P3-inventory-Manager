@@ -4,7 +4,7 @@ import React from 'react';
 const Footer = () => {
   return (
     <footer>
-      <p>&copy; {new Date().getFullYear()} Inventory Management App</p>
+      <p>&copy; {new Date().getFullYear()} KIM Inventory Manager</p>
     </footer>
   );
 };

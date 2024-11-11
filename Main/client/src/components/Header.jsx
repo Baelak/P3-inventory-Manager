@@ -1,11 +1,13 @@
-// File: client/src/components/Header.js
+// File: client/src/components/Header.js  <img src='/images/logo.png' alt='application-logo'/>
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
     <header>
-      <h1>Inventory Management App</h1>
+      <h1>
+        
+        KIM INVENTORY MANAGER</h1>
       <nav>
         <Link to="/">Dashboard</Link>
         <Link to="/inventory">Inventory</Link>

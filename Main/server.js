@@ -1,11 +1,10 @@
-// File: server.js
-
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const { typeDefs, resolvers } = require('./schema');
+const { typeDefs } = require('./schema/typeDefs');
+const { resolvers } = require('./schema/resolvers');
 const { authMiddleware } = require('./utils/auth');
 require('dotenv').config();
 
@@ -23,27 +22,37 @@ app.use(express.json());
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+})
+  .then(() => console.log('🌐 MongoDB connected successfully'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// Apollo Server setup with authentication
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: authMiddleware,
-});
-
-server.applyMiddleware({ app });
-
-// Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+// Start Apollo Server and apply middleware
+const startApolloServer = async () => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: authMiddleware,
   });
-}
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`GraphQL endpoint at http://localhost:${PORT}${server.graphqlPath}`);
-});
+  // Ensure the server starts before applying middleware
+  await server.start();
+  server.applyMiddleware({ app });
+
+  // Serve static assets in production
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client/build')));
+
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+  }
+
+  // Start Express server
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`🔗 GraphQL endpoint at http://localhost:${PORT}${server.graphqlPath}`);
+  });
+};
+
+// Initialize Apollo Server
+startApolloServer();

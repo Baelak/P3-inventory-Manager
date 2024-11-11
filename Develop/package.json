@@ -1,17 +1,17 @@
 {
-  "name": "kym-inventory-management",
+  "name": "KIM-inventory-manager",
   "version": "1.0.0",
   "description": "Full-stack inventory management application",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "vite && node server.js",
     "watch": "nodemon server.js",
     "seed": "node seeds/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Baelak/P2-inventory-Management-App"
+    "url": "https://github.com/Baelak/P3-inventory-Manager"
   },
   "keywords": [],
   "author": "",

@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <main>
       <h2>Dashboard</h2>
-      <p>Welcome to the Inventory Management Dashboard!</p>
+      <p>Welcome to KIM Inventory Manager Dashboard!</p>
       <Link to="/inventory">Go to Inventory</Link>
     </main>
   );

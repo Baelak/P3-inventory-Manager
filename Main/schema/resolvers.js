@@ -1,7 +1,8 @@
-// File: schema/resolvers.js
+// File: Main/schema/resolvers.js
 
-const { User, InventoryItem } = require('../models');
-const bcrypt = require('bcryptjs');
+const { AuthenticationError } = require('apollo-server-express');
+const User = require('../models/User');
+const InventoryItem = require('../models/InventoryItem');
 const jwt = require('jsonwebtoken');
 
 const resolvers = {
@@ -19,13 +20,13 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     register: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password: bcrypt.hashSync(password, 10) });
+      const user = await User.create({ username, email, password });
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
       return { token, ...user._doc };
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
-      if (!user || !bcrypt.compareSync(password, user.password)) {
+      if (!user || !(await user.isCorrectPassword(password))) {
         throw new AuthenticationError('Invalid credentials');
       }
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
