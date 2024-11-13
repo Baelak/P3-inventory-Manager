@@ -1,58 +1,125 @@
-// File: client/src/pages/Signup.js
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { REGISTER_USER } from '../utils/mutations';
 
 const Signup = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // State for error messages
-  const [register] = useMutation(REGISTER_USER);
+  const [formState, setFormState] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await register({ variables: { username, email, password } });
-      console.log(data); // Log the response to see if it has the expected structure
-      if (data && data.register && data.register.token) {
+  const [register, { loading }] = useMutation(REGISTER_USER, {
+    onCompleted: (data) => {
+      console.log('Registration completed with data:', data);
+      if (data?.register?.token) {
+        console.log('Token received, saving to localStorage');
         localStorage.setItem('id_token', data.register.token);
+        console.log('Redirecting to dashboard...');
         window.location.assign('/dashboard');
-      } else {
-        console.error("No token returned in response");
-        setErrorMessage("Signup failed. Please try again.");
+      }
+    },
+    onError: (error) => {
+      console.log('Registration error occurred:', {
+        message: error.message,
+        graphQLErrors: error.graphQLErrors,
+        networkError: error.networkError
+      });
+      
+      const message = error.graphQLErrors?.[0]?.message || 
+                     error.networkError?.result?.errors?.[0]?.message ||
+                     error.message ||
+                     'Registration failed';
+      setErrorMessage(message);
+    }
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    console.log(`Field ${name} changed to:`, value);
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log('Form submitted with values:', formState);
+    setErrorMessage('');
+    
+    try {
+      if (!formState.username || !formState.email || !formState.password) {
+        const message = 'All fields are required';
+        console.log('Validation error:', message);
+        setErrorMessage(message);
+        return;
+      }
+
+      console.log('Attempting registration with:', formState);
+      const { data } = await register({
+        variables: { ...formState }
+      });
+      console.log('Registration response:', data);
+
+      if (!data?.register?.token) {
+        throw new Error('No token received');
       }
     } catch (err) {
-      console.error("Error during signup:", err);
-      setErrorMessage("Error during signup. Please try again."); // Set error message
+      console.error('Form submission error:', err);
+      // Error will be handled by onError callback
     }
   };
 
   return (
-    <form onSubmit={handleSignup}>
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
-      />
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <button type="submit">Signup</button>
-
-      {/* Display error message if there's an error */}
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-    </form>
+    <div className="container mx-auto px-4 py-8">
+      <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+      <form onSubmit={handleFormSubmit} className="max-w-md mx-auto">
+        <div className="mb-4">
+          <input
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Username"
+            name="username"
+            type="text"
+            value={formState.username}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Email"
+            name="email"
+            type="email"
+            value={formState.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-6">
+          <input
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Password"
+            name="password"
+            type="password"
+            value={formState.password}
+            onChange={handleChange}
+          />
+        </div>
+        <button
+          className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? 'Signing up...' : 'Sign Up'}
+        </button>
+        {errorMessage && (
+          <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            {errorMessage}
+          </div>
+        )}
+      </form>
+    </div>
   );
 };
 

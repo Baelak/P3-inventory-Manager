@@ -1,29 +1,37 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type InventoryItem {
-    _id: ID
-    name: String
-    quantity: Int
-    price: Float
+  type User {
+    _id: ID!
+    username: String!
+    email: String!
   }
 
-  type User {
-    _id: ID
-    username: String
-    email: String
-    token: String
+  type Auth {
+    token: String!
+    user: User!
+  }
+
+  type InventoryItem {
+    _id: ID!
+    name: String!
+    quantity: Int!
+    price: Float!
   }
 
   type Query {
     getInventoryItems: [InventoryItem]
+    me: User
   }
 
   type Mutation {
+    register(username: String!, email: String!, password: String!): Auth!
+    login(email: String!, password: String!): Auth!
     addInventoryItem(name: String!, quantity: Int!, price: Float!): InventoryItem
-    register(username: String!, email: String!, password: String!): User
-    login(email: String!, password: String!): User
   }
 `;
 
-module.exports = { typeDefs };
+// Add immediate debugging
+console.log('TypeDefs loaded:', !!typeDefs);
+
+module.exports = typeDefs;  // Export directly without curly braces
