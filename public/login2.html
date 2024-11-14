@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="css/jass.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Inventory Management App</title>
+</head>
+
+<HEADER>
+    <header>
+        <a href="/"><img src="images/logo.jpeg" alt="Logo"></a>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+</HEADER>
+
+<body>
+
+    
+    <main>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email-login">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password-login">
+            </div>
+            <div class="form-group">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+    </main>
+
+  <h2 id="welcomeMessage" style="display: none;"> Bienvenido, <span id="user"></span>!</h2>
+
+  <script src="app.js"></script>
+  <script src="js/login2.js"></script>
+  <script src="js/logout.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
