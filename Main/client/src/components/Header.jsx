@@ -17,15 +17,15 @@ const Header = () => {
         <Link to="/">Dashboard</Link>
         <Link to="/inventory">Inventory</Link>
         {Auth.loggedIn() ? (
-            <button className="btn btn-lg btn-light m-2" onClick={logout}>
+            <button onClick={logout}>
               Logout
             </button>
           ) : (
             <>
-              <Link className="btn btn-lg btn-primary m-2" to="/login">
+              <Link to="/login">
                 Login
               </Link>
-              <Link className="btn btn-lg btn-light m-2" to="/signup">
+              <Link to="/signup">
                 Signup
               </Link>
             </>
