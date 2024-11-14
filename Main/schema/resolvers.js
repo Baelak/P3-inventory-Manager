@@ -11,6 +11,9 @@ console.log("Loading resolvers module");
 const resolvers = {
   Query: {
     // Keep your existing queries
+    getInventoryItems: async () => {
+      return InventoryItem.find();
+    },
   },
 
   Mutation: {
