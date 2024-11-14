@@ -3,6 +3,7 @@ const {
   UserInputError,
 } = require("apollo-server-express");
 const User = require("../models/User");
+const InventoryItem = require("../models/InventoryItem");
 const { signToken } = require("../utils/auth");
 
 console.log("Loading resolvers module");
@@ -85,6 +86,45 @@ const resolvers = {
 
       const token = signToken(user);
       return { token, user };
+    },
+    addInventoryItem: async (parent, { name, quantity, price }, context) => {
+      console.log("\n=== Add Inventory Started ===");
+      console.log("Add Inventory args:", name, quantity, price);
+
+      try {
+        // Basic validation
+        if (!name || !quantity || !price) {
+          throw new UserInputError("All fields are required");
+        }
+
+        // Create inventory - with explicit error catching
+        let inventory;
+        try {
+          inventory = await InventoryItem.create({
+            name: name.toLowerCase(),
+            quantity: parseInt(quantity, 10),
+            price,
+          });
+          console.log("Inventory created:", inventory._id);
+        } catch (err) {
+          console.error("Inventory creation error:", err);
+          throw new Error(`Inventory creation failed: ${err.message}`);
+        }
+
+        // Construct and verify response
+        const response = {
+          _id: inventory._id,
+          name: inventory.name,
+          quantity: inventory.quantity,
+          price: inventory.price,
+        };
+
+        console.log("Inventory Creation Successful, returning:", response);
+        return response;
+      } catch (error) {
+        console.error("Inventory Creation error:", error);
+        throw error;
+      }
     },
   },
 };

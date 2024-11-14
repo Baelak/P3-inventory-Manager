@@ -1,6 +1,6 @@
 // File: models/InventoryItem.js
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const inventoryItemSchema = new mongoose.Schema({
   name: {
@@ -17,4 +17,9 @@ const inventoryItemSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('InventoryItem', inventoryItemSchema);
+const InventoryItem = mongoose.model("InventoryItem", inventoryItemSchema);
+
+// Add model initialization log
+console.log("InventoryItem model initialized");
+
+module.exports = InventoryItem;
