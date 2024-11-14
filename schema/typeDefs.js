@@ -26,7 +26,7 @@ const typeDefs = gql`
 
   type Mutation {
     register(username: String!, email: String!, password: String!): Auth!
-    login(email: String!, password: String!): Auth!
+    login(username: String!, password: String!): Auth!
     addInventoryItem(name: String!, quantity: Int!, price: Float!): InventoryItem
   }
 `;
