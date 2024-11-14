@@ -4,8 +4,9 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_INVENTORY_ITEMS } from '../utils/queries';
 import { ADD_INVENTORY_ITEM } from '../utils/mutations';
 import InventoryItemCard from '../components/InventoryItemCard';
+import Auth from '../utils/auth';
 
-const Inventory = ({ user }) => {
+const Inventory = () => {
   const { loading, data, error } = useQuery(GET_INVENTORY_ITEMS);
   const [addInventoryItem] = useMutation(ADD_INVENTORY_ITEM);
   const [name, setName] = useState('');
@@ -15,7 +16,7 @@ const Inventory = ({ user }) => {
 
   const handleAddItem = async (e) => {
     e.preventDefault();
-    if (!user) {
+    if (!Auth.loggedIn() ) {
       setErrorMessage("You must be logged in to add inventory.");
       return;
     }
@@ -28,7 +29,7 @@ const Inventory = ({ user }) => {
   };
 
   const renderInventoryItems = () => {
-    if (!user) {
+    if (!Auth.loggedIn() ) {
       return <p>Please log in first 😊.</p>;
     }
     if (!data || !data.getInventoryItems || data.getInventoryItems.length === 0) {
@@ -43,7 +44,7 @@ const Inventory = ({ user }) => {
     <main>
       <h2>Inventory</h2>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      {user && (
+      {Auth.loggedIn()  && (
         <form onSubmit={handleAddItem}>
           <input
             type="text"
