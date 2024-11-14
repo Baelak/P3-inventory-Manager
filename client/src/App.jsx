@@ -1,24 +1,28 @@
-import './App.css'
-import Footer from "./components/Footer"
+// File: client/src/App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
+import Footer from './components/Footer';
+import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Inventory from './pages/Inventory';
+import InventoryItemCard from './components/InventoryItemCard';
 
-function App() {
-
+const App = () => {
   return (
-    <BrowserRouter>
+    <Router> {/* This will now work correctly as BrowserRouter */}
       <Header />
-
       <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/login" element={<Login/>} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/inventory" element={<Inventory />} />
+        <Route path="/inventoryitemcard" element={<InventoryItemCard />} />
       </Routes>
-
       <Footer />
-    </BrowserRouter>
-  )
-}
+    </Router>
+  );
+};
 
-export default App
+export default App;

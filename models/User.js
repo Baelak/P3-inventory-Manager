@@ -1,97 +1,86 @@
-// const { Model, DataTypes } = require('sequelize');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
-// const sequelize = require('../config/connection.js');
+// Add debug namespace for easier log filtering
+const debug = require("debug")("app:user-model");
 
-// class User extends Model {}
-
-// User.init(
-//   {
-//    id: {
-//     type: DataTypes.INTEGER,
-//     allowNull: false,
-//     primaryKey: true,
-//     autoIncrement: true,
-//    },
-//    username:{
-//     type:DataTypes.STRING,
-//     allowNull:false,
-//    },
-//    email:{
-//     type:DataTypes.STRING,
-//     allowNull:false,
-//    },
-//    password:{
-//     type:DataTypes.STRING,
-//     allowNull:false,
-//    },
-//   },
-//   {
-//     sequelize,
-//     timestamps: false,
-//     freezeTableName: true,
-//     underscored: true,
-//     modelName: 'user',
-//   }
-// );
-
-// module.exports = User;
-
-
-const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
-const sequelize = require('../config/connection');
-
-class User extends Model {
-  checkPassword(loginPw) {
-    return bcrypt.compareSync(loginPw, this.password);
-  }
-}
-
-User.init(
+const userSchema = new mongoose.Schema(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     username: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: String,
+      required: [true, "Username is required"],
+      unique: true,
+      trim: true,
+      lowercase: true,
+      minlength: [3, "Username must be at least 3 characters"],
     },
     email: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: String,
+      required: [true, "Email address is required"],
       unique: true,
-      validate: {
-        isEmail: true,
-      },
+      trim: true,
+      lowercase: true,
+      match: [/.+@.+\..+/, "Please enter a valid email address"],
     },
     password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [8],
-      },
+      type: String,
+      required: [true, "Password is required"],
+      minlength: [6, "Password must be at least 6 characters"],
     },
   },
   {
-    hooks: {
-      beforeCreate: async (newUserData) => {
-        newUserData.password = await bcrypt.hash(newUserData.password, 10);
-        return newUserData;
-      },
-      beforeUpdate: async (updatedUserData) => {
-        updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
-        return updatedUserData;
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (doc, ret) => {
+        delete ret.password; // Remove password from JSON responses
+        return ret;
       },
     },
-    sequelize,
-    timestamps: false,
-    freezeTableName: true,
-    underscored: true,
-    modelName: 'users',
   }
 );
+
+// Add detailed logging to password hashing
+userSchema.pre("save", async function (next) {
+  console.log("\n=== Password Hashing Process ===");
+
+  if (this.isNew || this.isModified("password")) {
+    console.log("Password needs hashing (new user or modified password)");
+
+    try {
+      // Generate salt and hash password
+      const salt = await bcrypt.genSalt(10);
+      console.log("Salt generated successfully");
+
+      this.password = await bcrypt.hash(this.password, salt);
+      console.log("Password hashed successfully");
+    } catch (err) {
+      console.error("⚠️ Password hashing error:", err);
+      return next(err);
+    }
+  } else {
+    console.log("Password unchanged - skipping hash");
+  }
+
+  next();
+});
+
+// Enhanced password comparison method
+userSchema.methods.isCorrectPassword = async function (password) {
+  console.log("\n=== Password Comparison ===");
+  try {
+    const isMatch = await bcrypt.compare(password, this.password);
+    console.log("Password comparison result:", isMatch ? "Match" : "No match");
+    return isMatch;
+  } catch (err) {
+    console.error("⚠️ Password comparison error:", err);
+    throw new Error("Password comparison failed");
+  }
+};
+
+const User = mongoose.model("User", userSchema);
+
+// Add model initialization log
+console.log("User model initialized");
 
 module.exports = User;

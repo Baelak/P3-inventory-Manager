@@ -1,54 +1,76 @@
 const express = require('express');
-const routes = require('./routes');
-const exphbs = require('express-handlebars');
+const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
-const session = require('express-session'); // Added express-session
-const SequelizeStore = require('connect-session-sequelize')(session.Store); // Added Sequelize store
-const sequelize = require('./config/connection');
+const cors = require('cors');
+const db = require('./config/connection');
+const typeDefs = require('./schema/typeDefs');
+const resolvers = require('./schema/resolvers');
+const { authMiddleware } = require('./utils/auth');
+require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4000;
 
-// Set up Handlebars with a default layout and custom helpers
-// const hbs = exphbs.create({ 
-//   defaultLayout: 'main', 
-//   extname: '.handlebars',
-//   helpers: {
-//     extend: function () {
-//       const context = Object.assign({}, ...arguments);
-//       return context;
-//     }
-//   }
-// });
+// Updated CORS configuration
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://studio.apollographql.com'  // Allow Apollo Studio
+  ],
+  credentials: true
+}));
 
-// app.engine('handlebars', hbs.engine);
-// app.set('view engine', 'handlebars');
-// app.set('views', path.join(__dirname, 'views'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Configure sessions
-const sess = {
-  secret: 'inventoryappkym', 
-  cookie: {},
-  resave: false,
-  saveUninitialized: true,
-  store: new SequelizeStore({
-    db: sequelize,
-  }),
+const startApolloServer = async () => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: authMiddleware,
+    formatError: (err) => {
+      console.error('GraphQL Error:', err);
+      return err;
+    },
+    // Add these settings for better playground support
+    introspection: true,
+    playground: {
+      endpoint: '/graphql',
+      settings: {
+        'editor.theme': 'dark',
+        'editor.reuseHeaders': true,
+        'request.credentials': 'include',
+        'tracing.hideTracingResponse': false,
+      }
+    }
+  });
+
+  await server.start();
+  
+  server.applyMiddleware({ 
+    app,
+    path: '/graphql',
+    cors: false,
+  });
+
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client/dist')));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'client/dist/index.html'));
+    });
+  }
+
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`🔗 GraphQL endpoint at http://localhost:${PORT}/graphql`);
+    console.log(`🎮 GraphQL Playground available at http://localhost:${PORT}/graphql`);
+  });
 };
 
-app.use(session(sess)); // Added session middleware
-
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-// app.use(express.static(path.join(__dirname, 'public'))); // Correct static file path
-
-// Routes
-app.use(routes);
-
-// Start server and sync database without force: true
-sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => {
-    console.log(`💚 App listening on port ${PORT}!`);
+db.once('open', () => {
+  console.log('📚 MongoDB connected successfully');
+  startApolloServer().catch(err => {
+    console.error('Failed to start Apollo Server:', err);
   });
 });

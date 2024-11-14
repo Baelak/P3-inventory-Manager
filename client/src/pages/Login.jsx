@@ -1,43 +1,31 @@
-import { useState } from "react";
+// File: client/src/pages/Login.js
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../utils/mutations';
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [login] = useMutation(LOGIN_USER);
 
-    const handleSubmit = (e) => {
-        console.log(email)
-        console.log(password)
-        e.preventDefault();
-
-
-        fetch("/api/users/login", 
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    email,
-                    password
-                })
-            }
-        )
-        .then(response => response.json())
-        .then(data => console.log(data)) 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await login({ variables: { email, password } });
+      localStorage.setItem('id_token', data.login.token);
+      window.location.assign('/dashboard');
+    } catch (err) {
+      console.error(err);
     }
+  };
 
-    return (
-        <section id="login">
-            <h2>Log In</h2>
-            <form className="login-form" onSubmit={handleSubmit}>
-                <label for="email-login">Email:</label>
-                <input type="email" id="email-login" name="email" onChange={(e) => setEmail(e.target.value)} required />
-
-                <label for="password-login">Password:</label>
-                <input type="password" id="password-login" name="password"  onChange={(e) => setPassword(e.target.value)} required />
-
-                <button type="submit">Log In</button>
-            </form>
-        </section>
-    )
-}
-
+  return (
+    <form onSubmit={handleLogin}>
+      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+      <button type="submit">Login</button>
+    </form>
+  );
+};
 
 export default Login;

@@ -1,19 +1,24 @@
-const Sequelize = require('sequelize');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
-let sequelize;
+mongoose.set('strictQuery', false); // Add this line to handle the deprecation warning
 
-if (process.env.DB_URL) {
-  sequelize = new Sequelize(process.env.DB_URL);
-} else {
-  sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PW,
-    {
-      host: 'localhost',
-      dialect: 'postgres',
-    },
-  );
-}
-module.exports = sequelize;
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/kiminventoryDB', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    
+    console.log('🌿 MongoDB Connected Successfully');
+  } catch (err) {
+    console.error('❌ MongoDB connection error:', err);
+    process.exit(1); // Exit process with failure
+  }
+};
+
+// Call the connect function
+connectDB();
+
+// Export the mongoose connection
+module.exports = mongoose.connection;
