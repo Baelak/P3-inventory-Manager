@@ -11,7 +11,7 @@ lerna-debug.log*
 /dist
 dist-ssr
 *.local
-/# TASK LIST
+/_TASK-LIST
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
