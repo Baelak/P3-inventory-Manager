@@ -11,7 +11,7 @@ services:
       - key: MONGODB_URI
         fromDatabase: YOUR_RENDER_MONGODB_DATABASE_NAME
       - key: JWT_SECRET
-        value: YOUR_SECRET_KEY
+        value: mysupersecretkey123!@#
 
   - type: web
     name: inventory-management-frontend
