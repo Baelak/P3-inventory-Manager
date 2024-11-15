@@ -1,10 +1,7 @@
-const {
-  AuthenticationError,
-  UserInputError,
-} = require("apollo-server-express");
 const User = require("../models/User");
 const InventoryItem = require("../models/InventoryItem");
 const { signToken } = require("../utils/auth");
+const { AuthenticationError, UserInputError } = require("../errors/errors") 
 
 console.log("Loading resolvers module");
 

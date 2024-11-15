@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { searchItems } from '../services/searchService';
+//import { searchItems } from '../../../utils/searchService';
 
 const SearchBox = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -13,7 +13,8 @@ const SearchBox = () => {
     try {
       setIsLoading(true);
       setError(null);
-      const results = await searchItems(searchQuery);
+      //const results = await searchItems(searchQuery);
+      let results = await fetch('/googleapi?searchQuery='+searchQuery);
       console.log('Search results:', results);
       // You can add a callback prop here to send results back to parent component
     } catch (err) {
@@ -40,9 +41,9 @@ const SearchBox = () => {
           </button>
         </div>
         {error && <p className="error-message">{error}</p>}
-        <p className="search-hint">
+        {/* <p className="search-hint">
           Search for products, services, suppliers and more 🔍
-        </p>
+        </p> */}
       </form>
     </div>
   );

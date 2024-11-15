@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import SearchBox from '../components/SearchBox';
+//import { searchItems } from '../../../utils/searchService';
 
 const Dashboard = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState(null);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    // This will be connected to API later
-    console.log('Search query:', searchQuery);
+  const handleSearch = async (query) => {
+    try {
+      setIsSearching(true);
+      setSearchError(null);
+      const results = await searchItems(query);
+      setSearchResults(results);
+      console.log('Search results:', results);
+    } catch (error) {
+      setSearchError('Failed to perform search. Please try again.');
+      console.error('Search error:', error);
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   return (
@@ -20,21 +33,35 @@ const Dashboard = () => {
         </div>
 
         {/* Search Section */}
-        <div className="search-container">
-          <form onSubmit={handleSearch}>
-            <div className="search-box">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products, services, suppliers..."
-              />
-              <button type="submit">Search</button>
+        <SearchBox onSearch={handleSearch} isLoading={isSearching} />
+
+        {/* Search Results */}
+        <div className="search-results">
+          {searchError && (
+            <p className="error-message">{searchError}</p>
+          )}
+          
+          {isSearching ? (
+            <p>Searching...</p>
+          ) : searchResults.length > 0 ? (
+            <div className="results-container">
+              {searchResults.map((result, index) => (
+                <div key={index} className="result-item">
+                  <h3>{result.title}</h3>
+                  <p>{result.snippet}</p>
+                  {result.link && (
+                    <a href={result.link} target="_blank" rel="noopener noreferrer">
+                      Learn more
+                    </a>
+                  )}
+                </div>
+              ))}
             </div>
+          ) : (
             <p className="search-hint">
               Search for products, services, suppliers and more 🔍
             </p>
-          </form>
+          )}
         </div>
 
         {/* Navigation Section */}
