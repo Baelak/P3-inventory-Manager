@@ -17,7 +17,7 @@ const Signup = () => {
         console.log('Token received, saving to localStorage');
         localStorage.setItem('id_token', data.register.token);
         console.log('Redirecting to dashboard...');
-        window.location.assign('/');
+        window.location.assign('/dashboard');
       }
     },
     onError: (error) => {

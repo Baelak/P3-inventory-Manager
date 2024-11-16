@@ -1,0 +1,20 @@
+# File: render.yaml
+
+services:
+  - type: web
+    name: inventory-management-backend
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "node server.js"
+    envVars:
+      - key: MONGODB_URI
+        fromDatabase: YOUR_RENDER_MONGODB_DATABASE_NAME
+      - key: JWT_SECRET
+        value: mysupersecretkey123!@#
+
+  - type: web
+    name: inventory-management-frontend
+    env: static
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: build

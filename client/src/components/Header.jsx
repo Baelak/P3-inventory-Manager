@@ -1,18 +1,38 @@
-import  {Link} from "react-router-dom";
+// File: client/src/components/Header.js  <img src='/images/logo.png' alt='application-logo'/>
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 const Header = () => {
-    return (
-        <header>
-        <h1>KYM Inventory Management Application</h1>
-        <nav>
-                <Link to="/profile">Profile</Link> 
-                <Link id="logout" to="#">Logout</Link> 
-                <Link to="/login">Login</Link> 
-                <Link to="/signup">Sign Up</Link>
-        </nav>
+  const logout = (event) => {
+    event.preventDefault();
+    Auth.logout();
+  };
+  return (
+    <header>
+      <h1>
+        
+        KIM INVENTORY MANAGER</h1>
+      <nav>
+        <Link to="/">Dashboard</Link>
+        <Link to="/inventory">Inventory</Link>
+        {Auth.loggedIn() ? (
+            <button onClick={logout}>
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link to="/login">
+                Login
+              </Link>
+              <Link to="/signup">
+                Signup
+              </Link>
+            </>
+          )}
+      </nav>
     </header>
-    )
-}
-
+  );
+};
 
 export default Header;
