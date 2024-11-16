@@ -28,10 +28,9 @@ const typeDefs = gql`
     register(username: String!, email: String!, password: String!): Auth!
     login(username: String!, password: String!): Auth!
     addInventoryItem(name: String!, quantity: Int!, price: Float!): InventoryItem
+    deleteInventoryItem(id: ID!): Boolean
   }
 `;
 
-// Add immediate debugging
 console.log('TypeDefs loaded:', !!typeDefs);
-
-module.exports = typeDefs;  // Export directly without curly braces
+module.exports = typeDefs;

@@ -35,3 +35,9 @@ export const ADD_INVENTORY_ITEM = gql`
     }
   }
 `;
+
+export const DELETE_INVENTORY_ITEM = gql`
+  mutation deleteInventoryItem($id: ID!) {
+    deleteInventoryItem(id: $id)
+  }
+`;

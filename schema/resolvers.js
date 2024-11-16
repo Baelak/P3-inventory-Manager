@@ -1,7 +1,4 @@
-const {
-  AuthenticationError,
-  UserInputError,
-} = require("apollo-server-express");
+const { AuthenticationError, UserInputError } = require("apollo-server-express");
 const User = require("../models/User");
 const InventoryItem = require("../models/InventoryItem");
 const { signToken } = require("../utils/auth");
@@ -10,9 +7,13 @@ console.log("Loading resolvers module");
 
 const resolvers = {
   Query: {
-    // Keep your existing queries
-    getInventoryItems: async () => {
-      return InventoryItem.find();
+    getInventoryItems: async (parent, args, context) => {
+      // Check if user is logged in
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+      // Only return items for logged-in user
+      return InventoryItem.find({ userId: context.user._id });
     },
   },
 
@@ -24,12 +25,10 @@ const resolvers = {
       try {
         const { username, email, password } = args;
 
-        // Basic validation
         if (!username || !email || !password) {
           throw new UserInputError("All fields are required");
         }
 
-        // Create user - with explicit error catching
         let user;
         try {
           user = await User.create({
@@ -43,7 +42,6 @@ const resolvers = {
           throw new Error(`User creation failed: ${err.message}`);
         }
 
-        // Generate token - with explicit error catching
         let token;
         try {
           token = signToken({
@@ -57,7 +55,6 @@ const resolvers = {
           throw new Error(`Token generation failed: ${err.message}`);
         }
 
-        // Construct and verify response
         const response = {
           token,
           user: {
@@ -74,39 +71,45 @@ const resolvers = {
         throw error;
       }
     },
+
     login: async (parent, { username, password }) => {
       const user = await User.findOne({ username });
 
       if (!user) {
-        throw AuthenticationError;
+        throw new AuthenticationError('Invalid credentials');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw AuthenticationError;
+        throw new AuthenticationError('Invalid credentials');
       }
 
       const token = signToken(user);
       return { token, user };
     },
+
     addInventoryItem: async (parent, { name, quantity, price }, context) => {
+      // Check if user is logged in
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+
       console.log("\n=== Add Inventory Started ===");
       console.log("Add Inventory args:", name, quantity, price);
 
       try {
-        // Basic validation
         if (!name || !quantity || !price) {
           throw new UserInputError("All fields are required");
         }
 
-        // Create inventory - with explicit error catching
         let inventory;
         try {
           inventory = await InventoryItem.create({
             name: name.toLowerCase(),
             quantity: parseInt(quantity, 10),
             price,
+            userId: context.user._id // Add user reference
           });
           console.log("Inventory created:", inventory._id);
         } catch (err) {
@@ -114,12 +117,12 @@ const resolvers = {
           throw new Error(`Inventory creation failed: ${err.message}`);
         }
 
-        // Construct and verify response
         const response = {
           _id: inventory._id,
           name: inventory.name,
           quantity: inventory.quantity,
           price: inventory.price,
+          userId: inventory.userId
         };
 
         console.log("Inventory Creation Successful, returning:", response);
@@ -129,10 +132,35 @@ const resolvers = {
         throw error;
       }
     },
+
+    deleteInventoryItem: async (parent, { id }, context) => {
+      // Check if user is logged in
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+
+      console.log('Attempting to delete inventory item:', id);
+      try {
+        // Only delete if item belongs to user
+        const deletedItem = await InventoryItem.findOneAndDelete({
+          _id: id,
+          userId: context.user._id
+        });
+
+        if (!deletedItem) {
+          throw new Error('Item not found or you are not authorized to delete it');
+        }
+
+        console.log('Item deleted successfully:', id);
+        return true;
+      } catch (error) {
+        console.error('Delete error:', error);
+        throw new Error(error.message);
+      }
+    },
   },
 };
 
-// Add immediate debugging
 console.log("Resolvers loaded:", !!resolvers);
 
-module.exports = resolvers; // Export directly without curly braces
+module.exports = resolvers;

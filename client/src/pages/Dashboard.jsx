@@ -1,43 +1,44 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import SearchBox from '../components/SearchBox';
 
 const Dashboard = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    // This will be connected to API later
-    console.log('Search query:', searchQuery);
+  const handleSearchResults = (results) => {
+    setSearchResults(results);
   };
 
   return (
     <div className="dashboard-container">
       <main>
-        {/* Header Section */}
         <div className="dashboard-header">
           <h2>Dashboard</h2>
           <p>Welcome to KIM Inventory Manager Dashboard!</p>
         </div>
 
-        {/* Search Section */}
-        <div className="search-container">
-          <form onSubmit={handleSearch}>
-            <div className="search-box">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products, services, suppliers..."
-              />
-              <button type="submit">Search</button>
-            </div>
-            <p className="search-hint">
-              Search for products, services, suppliers and more 🔍
-            </p>
-          </form>
-        </div>
+        <SearchBox onSearch={handleSearchResults} />
 
-        {/* Navigation Section */}
+        {/* Display Results */}
+        {searchResults.length > 0 && (
+          <div className="results-section">
+            <h3>Search Results</h3>
+            <div className="results-list">
+              {searchResults.map((result, index) => (
+                <div key={index} className="result-item">
+                  <h4>{result.title}</h4>
+                  <p>{result.snippet}</p>
+                  {result.link && (
+                    <a href={result.link} target="_blank" rel="noopener noreferrer">
+                      View More
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="nav-links">
           <Link to="/inventory">Go to Inventory</Link>
         </div>
