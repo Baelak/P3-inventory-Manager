@@ -1,3 +1,13 @@
 node_modules
 .env
+node_modules
+/node_modules
+/dist
+dist-ssr
+*.local
+/_TASK-LIST
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store

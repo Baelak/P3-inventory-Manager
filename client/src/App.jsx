@@ -1,24 +1,19 @@
-import './App.css'
-import Footer from "./components/Footer"
+// File: client/src/App.jsx
+import React from 'react';
 import Header from './components/Header';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Login from './pages/Login';
+import Footer from './components/Footer';
+import { ApolloProvider } from '@apollo/client';
+import client from './utils/apolloClient';
+import { Outlet } from 'react-router-dom';
 
-function App() {
-
+const App = () => {
   return (
-    <BrowserRouter>
+    <ApolloProvider client={client}>
       <Header />
-
-      <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/login" element={<Login/>} />
-      </Routes>
-
+          <Outlet />
       <Footer />
-    </BrowserRouter>
-  )
-}
+    </ApolloProvider>
+  );
+};
 
 export default App
