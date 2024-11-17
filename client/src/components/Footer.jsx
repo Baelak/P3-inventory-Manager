@@ -1,16 +1,30 @@
 // File: client/src/components/Footer.js
 import React from 'react';
+import { FaFacebook, FaInstagram, FaYoutube, FaTwitter } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
     <footer>
-      <a href="https://www.facebook.com/" target='_blank'><img src="../assets/F1-facebook-logo.png" alt="facebook-logo" /></a>
-      <a href="https://www.instagram.com/" target='_blank'><img src="../assets/F2-instagram-logo.png" alt='instagram-logo'></img></a>
-      <a href="https://kaleab-teklemichael.netlify.app/" target='_blank'><img src="../assets/F3-app-logo.png" alt='app-logo'></img></a>
-      <a href="https://x.com/" target='_blank'><img src="../assets/F4-x-logo.png" alt='x-logo'></img></a>
-      <a href="https://www.youtube.com/" target='_blank'><img src="../assets/F5-youtube-logo.png" alt='youtube-logo'></img></a>
-
-      <p>&copy; {new Date().getFullYear()} KIM Inventory Manager</p>
+      <div className="container">
+        <div className="footer">
+          <ul>
+            <li>
+              <Link to="https://www.facebook.com/" target='_blank'><FaFacebook /></Link>
+            </li>
+            <li>
+              <Link to="https://www.instagram.com/" target='_blank'><FaInstagram /></Link>
+            </li>
+            <li>
+              <Link to="https://www.x.com/" target='_blank'><FaTwitter /></Link>
+            </li>
+            <li>
+              <Link to="https://www.youtube.com/" target='_blank'><FaYoutube /></Link>
+            </li>
+          </ul>
+          <p>&copy; {new Date().getFullYear()} KIM Inventory Manager</p>
+        </div>
+      </div>
     </footer>
   );
 };

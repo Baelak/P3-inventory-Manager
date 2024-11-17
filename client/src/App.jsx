@@ -5,12 +5,15 @@ import Footer from './components/Footer';
 import { ApolloProvider } from '@apollo/client';
 import client from './utils/apolloClient';
 import { Outlet } from 'react-router-dom';
+import "./styles/App.css"
 
 const App = () => {
   return (
     <ApolloProvider client={client}>
       <Header />
-          <Outlet />
+      <div className="container">
+        <Outlet />
+      </div>
       <Footer />
     </ApolloProvider>
   );

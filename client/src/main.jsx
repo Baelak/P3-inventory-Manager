@@ -7,7 +7,6 @@ import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Inventory from './pages/Inventory.jsx'
 import InventoryItemCard from './components/InventoryItemCard.jsx'
-import './index.css'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +16,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <Dashboard />
+      },
+      {
+        path: '/dashboard',
         element: <Dashboard />
       }, {
         path: '/login',

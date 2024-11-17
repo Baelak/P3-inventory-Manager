@@ -10,26 +10,30 @@ const Header = () => {
   };
   return (
     <header>
-      <h1>⨮⋮⨭</h1>
-      <h2>K⋮M</h2>
-      <nav>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/inventory">Inventory</Link>
-        {Auth.loggedIn() ? (
-          <button onClick={logout}>
-            Logout
-          </button>
-        ) : (
-          <>
-            <Link to="/login">
-              Login
-            </Link>
-            <Link to="/signup">
-              Signup
-            </Link>
-          </>
-        )}
-      </nav>
+      <div className="container">
+        <div className="header">
+          <Link to="/">Inventory Manager</Link>
+          <nav>
+            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/inventory">Inventory</Link>
+            {Auth.loggedIn() ? (
+              <button onClick={logout}>
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link to="/login">
+                  Login
+                </Link>
+                <Link to="/signup">
+                  Signup
+                </Link>
+              </>
+            )}
+          </nav>
+        </div>
+      </div>
+
     </header>
   );
 };

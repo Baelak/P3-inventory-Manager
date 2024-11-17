@@ -34,11 +34,40 @@ header h1 {
 body {
   font-family: Arial, sans-serif;
   font-size: 16px;
-  background-color: #292929 ;
+  background-color: #F9FAFB;
+  color: #333333;
+}
 
+ul {
+  list-style: none;
+}
+
+a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+img {
+  width: 100%;
+}
+
+.container {
+  max-width: 85%;
+  margin: 0 auto;
 }
 
 /* Header styles */
+
+header {
+  background-color: #fff;
+  padding: 30px 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
 header h1{
   display: block;
   background-color: green;
@@ -73,67 +102,48 @@ nav {
 button {
   list-style-type: none;
   background-color: transparent;
-  color: white;
+  color: #ffffff;
   border: none;
-  outline: #FB0E7D;
-  font-size: 15px;
-  font-weight: bold;
-
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #4A90E2;
 }
 
 /* Customize  Logout button on hover once logged in*/
 
 button:hover {
-  color: white;
-  font-size: 1.5rem;  /* Customize transform on text for the nav buttons */
-  text-shadow: 2px 2px 5px #FB0E7D; /* Customize shadow on text */
-
-}
-
-/*Customize logout button color when clicked*/
-button:focus {
-  color: #FB0E7D;
-
+  background-color: #DCEEFB;
+  color: #4A90E2;
 }
 
 
-nav a {
-  color: white;
-  text-decoration: none;
+/* Main content styles */
+main {
+  padding: 20px 0;
 }
 
-nav a:hover{
-  color: white;
-  font-size: 1.5rem;  /* Customize transform on text for the nav buttons */
-  text-shadow: 2px 2px 5px #FB0E7D; /* Customize shadow on text */
-
-}
-
-nav a:focus {
-  color: #FB0E7D;
-}
-
- /*Customize the Footer*/
+/* Footer styles */
 
  footer {
   text-align: center;
-  background-color: #0c3430;
+  background-color: #fff;
   position: fixed;
   bottom: 0;
   margin-bottom: 5px;
   width: 100%;
-  height: 10%;
 }
 
-/* Main content styles */
-main {
-  padding: 20px;
+.footer ul {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
-/* Footer styles */
-footer {
-  background-color: green;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
+footer a {
+  display: inline-block;
+}
+
+footer svg {
+  font-size: 20px;
 }
