@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "debug": "^4.3.4",
     "@apollo/client": "^3.8.8",
     "apollo-server-express": "^3.13.0",
     "bcryptjs": "^2.4.3",

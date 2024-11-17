@@ -30,7 +30,7 @@ const Inventory = () => {
 
   const renderInventoryItems = () => {
     if (!Auth.loggedIn() ) {
-      return <p>Please log in first 😊.</p>;
+      return <p>Please Login or Signup first 😊.</p>;
     }
     if (!data || !data.getInventoryItems || data.getInventoryItems.length === 0) {
       return <p>No inventory available.</p>;

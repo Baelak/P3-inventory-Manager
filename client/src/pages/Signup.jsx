@@ -79,7 +79,7 @@ const Signup = () => {
         <div className="mb-4">
           <input
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Username"
+            placeholder="Username 😊"
             name="username"
             type="text"
             value={formState.username}
@@ -89,7 +89,7 @@ const Signup = () => {
         <div className="mb-4">
           <input
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Email"
+            placeholder="Email 📧"
             name="email"
             type="email"
             value={formState.email}
@@ -99,7 +99,7 @@ const Signup = () => {
         <div className="mb-6">
           <input
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Password"
+            placeholder="Password 🤫"
             name="password"
             type="password"
             value={formState.password}

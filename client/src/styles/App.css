@@ -34,26 +34,29 @@ header h1 {
 body {
   font-family: Arial, sans-serif;
   font-size: 16px;
-  background-color: #292929 ;
+  background-color:#051e2c ;
+  color: white;
 
+}
+
+Header {
+  text-align: center;
+  justify-content: center;
+  background-color: #2CF6B3;
+  width: 100%;
+  height: 20%;
 }
 
 /* Header styles */
-header h1{
-  display: block;
-  background-color: green;
-  color: #FB0E7D;
-  padding-left: 50%;
-  padding-right: 50%;
+
+
+
+header img{
+  justify-content: center;
+  height: 4rem;
+  padding: .5rem;
 }
 
-header h2{
-  display: block;
-  background-color: green;
-  color: white;
-  padding-left: 51.9%;
-  padding-right: 48.1%;
-}
 
 
 nav {
@@ -64,18 +67,23 @@ nav {
   margin-right: 2rem;
   background-color: transparent;
   border: none;
-  outline: #FB0E7D;
+  outline: #CB48B7;
   font-size: 15px;
   font-weight: bold;
 
 }
+
+nav a {
+  text-decoration: none;
+}
+
 
 button {
   list-style-type: none;
   background-color: transparent;
   color: white;
   border: none;
-  outline: #FB0E7D;
+  outline: #CB48B7;
   font-size: 15px;
   font-weight: bold;
 
@@ -86,21 +94,17 @@ button {
 button:hover {
   color: white;
   font-size: 1.5rem;  /* Customize transform on text for the nav buttons */
-  text-shadow: 2px 2px 5px #FB0E7D; /* Customize shadow on text */
+  text-shadow: 2px 2px 5px #CB48B7; /* Customize shadow on text */
 
 }
 
 /*Customize logout button color when clicked*/
 button:focus {
-  color: #FB0E7D;
+  color: #CB48B7;
 
 }
 
 
-nav a {
-  color: white;
-  text-decoration: none;
-}
 
 nav a:hover{
   color: white;
@@ -110,7 +114,7 @@ nav a:hover{
 }
 
 nav a:focus {
-  color: #FB0E7D;
+  color: #CB48B7;
 }
 
  /*Customize the Footer*/
@@ -122,7 +126,18 @@ nav a:focus {
   bottom: 0;
   margin-bottom: 5px;
   width: 100%;
-  height: 10%;
+  height: 20%;
+}
+
+footer img{
+  height: 3rem;
+  padding: .5rem;
+}
+
+/*Customize the Footer image on hover*/
+
+footer img:hover {
+  transform: scale(1.5);  /* Slightly enlarges the image on hover */
 }
 
 /* Main content styles */
@@ -132,8 +147,8 @@ main {
 
 /* Footer styles */
 footer {
-  background-color: green;
-  color: #fff;
+  background-color: #079D6B;
+  color: white;
   padding: 10px;
   text-align: center;
 }
