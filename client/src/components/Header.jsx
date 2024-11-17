@@ -11,9 +11,9 @@ const Header = () => {
   return (
     <header>
       <h1>⨮⋮⨭</h1>
-      <h1>K⋮M</h1>
+      <h2>K⋮M</h2>
       <nav>
-        <Link to="/">Dashboard</Link>
+        <Link to="/dashboard">Dashboard</Link>
         <Link to="/inventory">Inventory</Link>
         {Auth.loggedIn() ? (
           <button onClick={logout}>
