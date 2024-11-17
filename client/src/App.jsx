@@ -14,7 +14,7 @@ const App = () => {
     <Router> {/* This will now work correctly as BrowserRouter */}
       <Header />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/inventory" element={<Inventory />} />

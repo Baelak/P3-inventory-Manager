@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+// User mutations
 export const REGISTER_USER = gql`
   mutation register($username: String!, $email: String!, $password: String!) {
     register(username: $username, email: $email, password: $password) {
@@ -20,11 +21,13 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
+        email
       }
     }
   }
 `;
 
+// Inventory mutations
 export const ADD_INVENTORY_ITEM = gql`
   mutation addInventoryItem($name: String!, $quantity: Int!, $price: Float!) {
     addInventoryItem(name: $name, quantity: $quantity, price: $price) {
@@ -32,6 +35,7 @@ export const ADD_INVENTORY_ITEM = gql`
       name
       quantity
       price
+      userId
     }
   }
 `;
@@ -39,5 +43,18 @@ export const ADD_INVENTORY_ITEM = gql`
 export const DELETE_INVENTORY_ITEM = gql`
   mutation deleteInventoryItem($id: ID!) {
     deleteInventoryItem(id: $id)
+  }
+`;
+
+// Query for getting user's inventory items
+export const GET_INVENTORY_ITEMS = gql`
+  query GetInventoryItems {
+    getInventoryItems {
+      _id
+      name
+      quantity
+      price
+      userId
+    }
   }
 `;

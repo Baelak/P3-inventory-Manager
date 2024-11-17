@@ -17,6 +17,9 @@ const typeDefs = gql`
     name: String!
     quantity: Int!
     price: Float!
+    userId: ID!
+    createdAt: String
+    updatedAt: String
   }
 
   type Query {
@@ -27,8 +30,8 @@ const typeDefs = gql`
   type Mutation {
     register(username: String!, email: String!, password: String!): Auth!
     login(username: String!, password: String!): Auth!
-    addInventoryItem(name: String!, quantity: Int!, price: Float!): InventoryItem
-    deleteInventoryItem(id: ID!): Boolean
+    addInventoryItem(name: String!, quantity: Int!, price: Float!): InventoryItem!
+    deleteInventoryItem(id: ID!): Boolean!
   }
 `;
 
