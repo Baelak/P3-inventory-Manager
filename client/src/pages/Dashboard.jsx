@@ -10,7 +10,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard">
       <main>
         <div className="dashboard-header">
           <h2>Dashboard</h2>
@@ -19,28 +19,8 @@ const Dashboard = () => {
 
         <SearchBox onSearch={handleSearchResults} />
 
-        {/* Display Results */}
-        {searchResults.length > 0 && (
-          <div className="results-section">
-            <h3>Search Results</h3>
-            <div className="results-list">
-              {searchResults.map((result, index) => (
-                <div key={index} className="result-item">
-                  <h4>{result.title}</h4>
-                  <p>{result.snippet}</p>
-                  {result.link && (
-                    <a href={result.link} target="_blank" rel="noopener noreferrer">
-                      View More
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
         <div className="nav-links">
-          <Link to="/inventory">Go to Inventory</Link>
+          <Link to="/inventory" className='btn-secondary'>Go to Inventory</Link>
         </div>
       </main>
     </div>
