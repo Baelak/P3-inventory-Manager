@@ -3,7 +3,7 @@ const { AuthenticationError } = require('apollo-server-express');
 require('dotenv').config();
 
 // Configuration
-const secret = process.env.JWT_SECRET || 'mysupersecretkey123!@#';
+const secret = process.env.JWT_SECRET || 'mysupersecretkey123!@';
 const expiration = '2h';
 
 // Token verification options
