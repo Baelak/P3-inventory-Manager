@@ -6,12 +6,21 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+
+# Environment variables
 .env
+
+# Dependency directories
 /node_modules
+
+# Build outputs
 /dist
 dist-ssr
+
+# Local development directories
 *.local
 /_TASK-LIST
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +31,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# MacOS system files
+._*
+
+# Parcel cache (if using Parcel bundler)
+.cache
+
+# Vite cache
+.vite
+
+# Coverage reports
+coverage
+
+# Testing snapshots
+*.snap
+
+# Ignore styles for dynamically generated builds
+*.css.map
+*.scssc
