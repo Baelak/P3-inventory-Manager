@@ -110,10 +110,13 @@ button:hover {
   color: #DCEEFB;
 }
 
-
 /* Main content styles */
 main {
   padding: 20px 0 120px;
+}
+
+main h2 {
+  margin-bottom: 20px;
 }
 
 /* dashboard */
@@ -142,8 +145,7 @@ main {
 .inventory h2 {
   margin-bottom: 20px;
 }
-
-.inventory form {
+ form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -152,7 +154,7 @@ main {
   gap: 20px;
 }
 
-.inventory form input {
+ form input {
   padding: 6px 4px;
 }
 
