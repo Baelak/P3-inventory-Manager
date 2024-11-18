@@ -55,10 +55,11 @@ const startApolloServer = async () => {
     cors: false,
   });
 
-  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client/dist')));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+      res.sendFile(path.join(__dirname, 'client/dist/index.html'));
     });
   }
 
