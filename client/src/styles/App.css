@@ -39,6 +39,93 @@ body {
 
 }
 
+/* Customize Header styles */
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+/* Customize Logo styles */
+
+.logo-container {
+  margin-bottom: 0px;
+}
+
+/* Customize Logo picture */
+
+.logo {
+  height: 4rem;
+}
+
+/* Customize Welcome text */
+
+.welcome-text {
+  margin-bottom: 10px;
+}
+
+/* Customize hamburger menu icon */
+
+.menu-icon {
+  font-size: 24px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.menu a,
+.menu button {
+  text-decoration: none;
+  color: #051e2c;
+  font-size: 16px;
+}
+
+/*responsive design customize menu and nav links at 768px*/
+
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+
+  .menu {
+    display: none;
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 100%;
+    background-color: #079D6B;
+    padding: 20px;
+    z-index: 1;
+  }
+
+  .menu.open {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu a,
+  .menu button {
+    margin-bottom: 10px;
+  }
+}
+
+/*responsive design customize menu open at 425px*/
+
+@media (max-width: 425px) {
+  .menu.open {
+    display: flex;
+    flex-direction: column;
+    margin-top: 55px;
+  }
+}
 Header {
   text-align: center;
   justify-content: center;
@@ -47,17 +134,15 @@ Header {
   height: 20%;
 }
 
-/* Header styles */
+/* Customize Header logo image */
 
-
-
-header img{
+header img {
   justify-content: center;
   height: 4rem;
   padding: .5rem;
 }
 
-
+/* Customize navigation Link placement */
 
 nav {
   list-style-type: none;
@@ -72,11 +157,29 @@ nav {
   font-weight: bold;
 
 }
+/* Customize navigation Link text */
 
 nav a {
   text-decoration: none;
+  color: #051e2c;
 }
 
+/* Customize navigation Link texts on hover */
+
+nav a:hover{
+  color: white;
+  font-size: 1.5rem;  /* Customize transform on text for the nav buttons */
+  text-shadow: 2px 2px 5px #FB0E7D; /* Customize shadow on text */
+
+}
+
+/* Customize navigation Link texts on click */
+
+nav a:focus {
+  color: #CB48B7;
+}
+
+/* Customize  Logout button */
 
 button {
   list-style-type: none;
@@ -99,35 +202,23 @@ button:hover {
 }
 
 /*Customize logout button color when clicked*/
+
 button:focus {
   color: #CB48B7;
 
-}
-
-
-
-nav a:hover{
-  color: white;
-  font-size: 1.5rem;  /* Customize transform on text for the nav buttons */
-  text-shadow: 2px 2px 5px #FB0E7D; /* Customize shadow on text */
-
-}
-
-nav a:focus {
-  color: #CB48B7;
 }
 
  /*Customize the Footer*/
 
  footer {
   text-align: center;
-  background-color: #0c3430;
+  background-color: #079D6B;
   position: fixed;
   bottom: 0;
-  margin-bottom: 5px;
   width: 100%;
-  height: 20%;
 }
+
+/*Customize the Footer image size*/
 
 footer img{
   height: 3rem;
@@ -140,15 +231,10 @@ footer img:hover {
   transform: scale(1.5);  /* Slightly enlarges the image on hover */
 }
 
-/* Main content styles */
+/* Main content styles /
 main {
-  padding: 20px;
-}
+  padding: 50px;
+  text-decoration: none;
+}*/
 
-/* Footer styles */
-footer {
-  background-color: #079D6B;
-  color: white;
-  padding: 10px;
-  text-align: center;
-}
+
