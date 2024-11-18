@@ -16,6 +16,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
+    'https://p3-inventory-manager-qkt8.onrender.com/',
     'https://studio.apollographql.com'  // Allow Apollo Studio
   ],
   credentials: true
@@ -53,6 +54,7 @@ const startApolloServer = async () => {
     path: '/graphql',
     cors: false,
   });
+
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'client/dist')));

@@ -26,11 +26,11 @@ const Signup = () => {
         graphQLErrors: error.graphQLErrors,
         networkError: error.networkError
       });
-      
-      const message = error.graphQLErrors?.[0]?.message || 
-                     error.networkError?.result?.errors?.[0]?.message ||
-                     error.message ||
-                     'Registration failed';
+
+      const message = error.graphQLErrors?.[0]?.message ||
+        error.networkError?.result?.errors?.[0]?.message ||
+        error.message ||
+        'Registration failed';
       setErrorMessage(message);
     }
   });
@@ -48,7 +48,7 @@ const Signup = () => {
     event.preventDefault();
     console.log('Form submitted with values:', formState);
     setErrorMessage('');
-    
+
     try {
       if (!formState.username || !formState.email || !formState.password) {
         const message = 'All fields are required';
@@ -73,53 +73,45 @@ const Signup = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-      <form onSubmit={handleFormSubmit} className="max-w-md mx-auto">
-        <div className="mb-4">
-          <input
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Username 😊"
-            name="username"
-            type="text"
-            value={formState.username}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Email 📧"
-            name="email"
-            type="email"
-            value={formState.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-6">
-          <input
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Password 🤫"
-            name="password"
-            type="password"
-            value={formState.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button
-          className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-          type="submit"
-          disabled={loading}
-        >
-          {loading ? 'Signing up...' : 'Sign Up'}
-        </button>
-        {errorMessage && (
-          <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-            {errorMessage}
-          </div>
-        )}
-      </form>
-    </div>
+    <main>
+      <div>
+        <h2>Sign Up</h2>
+        <form onSubmit={handleFormSubmit}>
+            <input
+              placeholder="Username"
+              name="username"
+              type="text"
+              value={formState.username}
+              onChange={handleChange}
+            />
+            <input
+              placeholder="Email"
+              name="email"
+              type="email"
+              value={formState.email}
+              onChange={handleChange}
+            />
+            <input
+              placeholder="Password"
+              name="password"
+              type="password"
+              value={formState.password}
+              onChange={handleChange}
+            />
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? 'Signing up...' : 'Sign Up'}
+          </button>
+          {errorMessage && (
+            <div>
+              {errorMessage}
+            </div>
+          )}
+        </form>
+      </div>
+    </main>
   );
 };
 

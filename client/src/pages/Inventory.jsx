@@ -16,7 +16,7 @@ const Inventory = () => {
 
   const handleAddItem = async (e) => {
     e.preventDefault();
-    if (!Auth.loggedIn() ) {
+    if (!Auth.loggedIn()) {
       setErrorMessage("You must be logged in to add inventory.");
       return;
     }
@@ -29,46 +29,65 @@ const Inventory = () => {
   };
 
   const renderInventoryItems = () => {
-    if (!Auth.loggedIn() ) {
-      return <p>Please Login or Signup first 😊.</p>;
+    if (!Auth.loggedIn()) {
+      return <p>Please log in first 😊.</p>;
     }
     if (!data || !data.getInventoryItems || data.getInventoryItems.length === 0) {
       return <p>No inventory available.</p>;
     }
-    return data.getInventoryItems.map((item) => (
-      <InventoryItemCard key={item._id} item={item} />
-    ));
+    return (
+      <div className='inventory-items'>
+        <h2>My Inventory</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.getInventoryItems.map((item) => (
+              <InventoryItemCard item={item} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
   };
 
   return (
     <main>
-      <h2>Inventory</h2>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      {Auth.loggedIn()  && (
-        <form onSubmit={handleAddItem}>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Item Name"
-          />
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            placeholder="Quantity"
-          />
-          <input
-            type="number"
-            step="0.01"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            placeholder="Price"
-          />
-          <button type="submit">Add Item</button>
-        </form>
-      )}
-      {loading ? <p>Loading inventory...</p> : renderInventoryItems()}
+      <div className="inventory">
+        <h2>Inventory</h2>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        {Auth.loggedIn() && (
+          <form onSubmit={handleAddItem}>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Item Name"
+            />
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              placeholder="Quantity"
+            />
+            <input
+              type="number"
+              step="0.01"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="Price"
+            />
+            <button type="submit">Add Item</button>
+          </form>
+        )}
+        {loading ? <p>Loading inventory...</p> : renderInventoryItems()}
+      </div>
     </main>
   );
 };
