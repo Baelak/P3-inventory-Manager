@@ -75,7 +75,7 @@ const SearchBox = ({ onSearch }) => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search Anything 🔍"
+            placeholder="Search for anything 🔍"
             disabled={isLoading}
           />
           <button type="submit" disabled={isLoading || !searchQuery.trim()}>

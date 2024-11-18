@@ -78,21 +78,21 @@ const Signup = () => {
         <h2>Sign Up</h2>
         <form onSubmit={handleFormSubmit}>
             <input
-              placeholder="Username"
+              placeholder="Username 😊"
               name="username"
               type="text"
               value={formState.username}
               onChange={handleChange}
             />
             <input
-              placeholder="Email"
+              placeholder="Email 📧"
               name="email"
               type="email"
               value={formState.email}
               onChange={handleChange}
             />
             <input
-              placeholder="Password"
+              placeholder="Password 🤫"
               name="password"
               type="password"
               value={formState.password}
