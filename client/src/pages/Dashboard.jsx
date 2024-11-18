@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SearchBox from '../components/SearchBox';
+import '../styles/dashboard.css'
 
 const Dashboard = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -14,11 +15,10 @@ const Dashboard = () => {
       <main>
         <div className="dashboard-header">
           <h2>Dashboard</h2>
-          <p>Welcome to KIM Inventory Manager Dashboard!</p>
         </div>
 
         <SearchBox onSearch={handleSearchResults} />
-
+        <h3>Search products, services, suppliers...</h3>
         {/* Display Results */}
         {searchResults.length > 0 && (
           <div className="results-section">

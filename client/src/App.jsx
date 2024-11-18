@@ -20,7 +20,6 @@ const App = () => {
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/inventoryitemcard" element={<InventoryItemCard />} />
       </Routes>
-      <h1>Logo and message here</h1>
       <Footer />
     </Router>
   );
