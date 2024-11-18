@@ -5,13 +5,14 @@
 An intuitive and efficient command-line application for managing inventory. This tool allows users to add, update, delete, and view inventory items, making it ideal for small businesses or personal use.
 ---
 ## Table of Contents
+
 - [Description](#description)
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
-+ [Technologies Used](#technologies-used)
-+ [Contact](#contact)
+- [Technologies Used](#technologies-used)
+- [Contact](#contact)
   ---
 ## Features
 
@@ -83,7 +84,7 @@ Create a pull request.
 ## Contact
 For any questions or feedback, feel free to reach out:
 
-### GitHub: 
+## GitHub: 
 - Baelak
 - Mielion
 - Voobane Matt S
