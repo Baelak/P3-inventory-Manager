@@ -10,9 +10,11 @@ An intuitive and efficient command-line application for managing inventory. This
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Deployment](#deployemnt)
 - [License](#license)
 - [Technologies Used](#technologies-used)
+- [Screenshot](#screenshot)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
 - [Contact](#contact)
   
 ## Features
@@ -53,7 +55,17 @@ node index.js
 - Search for a specific item using keywords.
   
 ---
-## Deployement
+## Screenshot
+
+Dashboard
+![image](https://github.com/user-attachments/assets/7f528fc1-9127-4487-a1ea-857cab0abcb8)
+
+inventory
+![image](https://github.com/user-attachments/assets/0f77f5d6-7c69-41e6-9074-210a1ce7692b)
+
+---
+
+## Deployment
 
 Preview the app [here](https://p3-inventory-manager-qkt8.onrender.com)
 
