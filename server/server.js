@@ -16,6 +16,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
+    'https://p3-inventory-manager-qkt8.onrender.com/',
     'https://studio.apollographql.com'  // Allow Apollo Studio
   ],
   credentials: true
@@ -54,7 +55,7 @@ const startApolloServer = async () => {
     cors: false,
   });
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') {
     app.use(express.static(path.join(__dirname, 'client/dist')));
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, 'client/dist/index.html'));
