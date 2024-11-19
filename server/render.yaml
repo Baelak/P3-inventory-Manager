@@ -9,7 +9,7 @@ services:
     startCommand: "node server.js"
     envVars:
       - key: MONGODB_URI
-        fromDatabase: YOUR_RENDER_MONGODB_DATABASE_NAME
+        fromDatabase: kiminventoryDB
       - key: JWT_SECRET
         value: mysupersecretkey123!@
 
